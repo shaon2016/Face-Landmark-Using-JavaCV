@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FaceLandmark Using JavaCV</string>
+    <string name="permission_deny_text">You have to accept the permissions to continue</string>
+
+</resources>
