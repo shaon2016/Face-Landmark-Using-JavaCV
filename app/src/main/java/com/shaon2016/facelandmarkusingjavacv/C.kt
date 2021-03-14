@@ -7,9 +7,11 @@ import androidx.core.content.ContextCompat.getExternalFilesDirs
 object C {
 
     fun modelHarcascadePath(context: Context) =
-        "${context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)}/haarcascade_frontalface_alt2.xml"
+        "${context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)}/$faceDetectionModelName"
 
     fun modelFaceLandMark(context: Context) =
-        "${context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)}/face_landmark_model.dat"
+        "${context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)}/$faceMarkModelName"
 
+    const val faceMarkModelName = "lbfmodel.yaml"
+    const val faceDetectionModelName = "haarcascade_frontalface_alt2.xml"
 }

@@ -32,7 +32,7 @@ object FaceDetection {
         val file = File(C.modelHarcascadePath(context))
         if (!file.exists())
             FileUtil.copyFileFromAsset(
-                context, "haarcascade_frontalface_alt2.xml",
+                context, C.faceDetectionModelName,
                 C.modelHarcascadePath(context)
             )
 
@@ -43,7 +43,7 @@ object FaceDetection {
         val file = File(C.modelFaceLandMark(context))
         if (!file.exists())
             FileUtil.copyFileFromAsset(
-                context, "face_landmark_model.dat",
+                context, C.faceMarkModelName,
                 C.modelFaceLandMark(context)
             )
 
