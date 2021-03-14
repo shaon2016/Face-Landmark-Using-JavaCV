@@ -15,6 +15,7 @@ import org.bytedeco.opencv.opencv_core.Mat
 import org.bytedeco.opencv.opencv_core.Point2fVectorVector
 import org.bytedeco.opencv.opencv_core.RectVector
 import org.bytedeco.opencv.opencv_face.FacemarkKazemi
+import org.bytedeco.opencv.opencv_face.FacemarkLBF
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier
 import org.opencv.core.CvType.CV_8U
 import org.opencv.core.CvType.channels
@@ -26,7 +27,7 @@ object FaceDetection {
      val TAG = FaceDetection::class.java.simpleName
 
     private lateinit var faceCascade: CascadeClassifier
-    private lateinit var facemark: FacemarkKazemi
+    private lateinit var facemark: FacemarkLBF
 
     fun loadFaceDetectionModel(context: Context) {
         val file = File(C.modelHarcascadePath(context))
@@ -47,7 +48,7 @@ object FaceDetection {
                 C.modelFaceLandMark(context)
             )
 
-        facemark = FacemarkKazemi.create()
+        facemark = FacemarkLBF.create()
 
         // Load landmark detector
         facemark.loadModel(C.modelFaceLandMark(context))
