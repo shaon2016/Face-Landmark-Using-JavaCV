@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     // views
     private lateinit var viewFinder: PreviewView
     private lateinit var viewFaceOverlay: FaceOverlayView
+    private lateinit var tvBlinkCount: TextView
 
     // Permission
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     // Camera
     private val cm by lazy {
-        CameraXManager(this, viewFinder, viewFaceOverlay)
+        CameraXManager(this, viewFinder, viewFaceOverlay, tvBlinkCount)
     }
 
     private var isModelLoaded = false
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         val pb = findViewById<ProgressBar>(R.id.pb)
         viewFinder = findViewById(R.id.viewFinder)
         viewFaceOverlay = findViewById(R.id.viewFaceOverlay)
+        tvBlinkCount = findViewById(R.id.tvBlinkCount)
 
         lifecycleScope.launch(Dispatchers.Default) {
             FaceDetection.loadFaceDetectionModel(this@MainActivity)

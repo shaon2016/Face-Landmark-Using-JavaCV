@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.Surface
+import android.widget.TextView
 import androidx.camera.core.*
 import androidx.camera.core.impl.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -16,9 +17,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.lifecycleScope
 import com.shaon2016.facelandmarkusingjavacv.FaceDetection
 import com.shaon2016.facelandmarkusingjavacv.model.Recognition
 import com.shaon2016.facelandmarkusingjavacv.util.Helper.toBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -31,7 +35,8 @@ typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
 class CameraXManager(
     private val context: Context,
     private val viewFinder: PreviewView,
-    private val viewFaceOverlay: FaceOverlayView
+    private val viewFaceOverlay: FaceOverlayView,
+    private val tvBlinkCount: TextView
 ) : LifecycleOwner {
 
     private val TAG = "CameraXManager"
@@ -182,6 +187,7 @@ class CameraXManager(
     ) :
         ImageAnalysis.Analyzer {
 
+        private var blinkCount = 0
 
         @SuppressLint("UnsafeExperimentalUsageError")
         override fun analyze(image: ImageProxy) {
@@ -196,8 +202,17 @@ class CameraXManager(
                     if (faces.size() > 0) {
                         val landmarks = FaceDetection.detectLandmarks(bitmapToMat, faces)
 
-                        if (landmarks.size() > 0)
+                        if (landmarks.size() > 0) {
                             viewFaceOverlay.setFaceLandmarks(faces[0], landmarks[0])
+
+                            val isBlinked = FaceDetection.isBlinked(landmarks[0])
+                            if (isBlinked) blinkCount++
+
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                tvBlinkCount.text = "Eye Blink: $blinkCount"
+                            }
+
+                        }
                     }
                 }
             }

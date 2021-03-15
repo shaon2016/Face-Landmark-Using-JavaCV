@@ -64,7 +64,10 @@ class FaceOverlayView(context: Context, attrs: AttributeSet) : View(context, att
                     val x = v.x()
                     val y = v.y()
 
-                    canvas.drawCircle(x, y, 8f, mStrokePaint)
+//                    canvas.drawCircle(x, y, 8f, mStrokePaint)
+
+                    canvas.drawText("$i", x, y, mStrokePaint)
+
                 }
             }
         }

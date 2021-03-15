@@ -26,6 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_margin="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:id="@+id/tvBlinkCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eye Blink: 00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/pb"
         android:layout_width="wrap_content"
