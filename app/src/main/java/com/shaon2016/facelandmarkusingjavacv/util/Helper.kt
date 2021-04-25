@@ -28,7 +28,6 @@ object Helper {
 
         rotationMatrix.postRotate(imageInfo.rotationDegrees.toFloat())
 
-
         val bitmap = Bitmap.createBitmap(
             width, height, Bitmap.Config.ARGB_8888
         )

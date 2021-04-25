@@ -2,10 +2,12 @@ package com.shaon2016.facelandmarkusingjavacv.camera
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.util.DisplayMetrics
 import android.util.Log
+import android.util.Size
 import android.view.OrientationEventListener
 import android.view.Surface
 import android.widget.TextView
@@ -20,9 +22,11 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.lifecycleScope
 import com.shaon2016.facelandmarkusingjavacv.FaceDetection
 import com.shaon2016.facelandmarkusingjavacv.model.Recognition
+import com.shaon2016.facelandmarkusingjavacv.util.Helper
 import com.shaon2016.facelandmarkusingjavacv.util.Helper.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -121,7 +125,7 @@ class CameraXManager(
         // Preview
         val preview = configurePreviewUseCase(screenAspectRatio)
 
-        imageCapture = configureImageCapture(screenAspectRatio)
+        imageCapture = configureImageCapture()
 
         imageAnalyzer = configureImageAnalyzer(screenAspectRatio)
 
@@ -195,6 +199,8 @@ class CameraXManager(
             image.image?.let {
                 val bitmap = image.toBitmap(ctx)
 
+                Log.d("image_size", bitmap?.byteCount.toString())
+
                 bitmap?.let {
                     val bitmapToMat = FaceDetection.bitmapToMat(bitmap)
 
@@ -221,7 +227,7 @@ class CameraXManager(
         }
     }
 
-    private fun configureImageCapture(screenAspectRatio: Int) = ImageCapture.Builder()
+    private fun configureImageCapture() = ImageCapture.Builder()
 //        .setTargetAspectRatio(screenAspectRatio)
         .setTargetRotation(viewFinder.display.rotation)
         .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
@@ -229,7 +235,7 @@ class CameraXManager(
 
     private fun configurePreviewUseCase(screenAspectRatio: Int) = Preview.Builder()
         .setTargetAspectRatio(screenAspectRatio)
-//        .setTargetResolution(Size(viewFinder.width, viewFinder.height))
+//        .setTargetResolution(Size(viewFinder.width, Helper.dpToPx(context, 300)))
         .setTargetRotation(viewFinder.display.rotation)
         .build()
         .also {

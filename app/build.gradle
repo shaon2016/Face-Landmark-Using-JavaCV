@@ -21,7 +21,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -51,7 +52,7 @@ dependencies {
 
     implementation "org.bytedeco:javacv:1.5.5"
     implementation group: 'org.bytedeco', name:  'opencv-platform', version: '4.5.1-1.5.5'
-    implementation group: 'org.bytedeco', name:  'opencv-platform', version: '4.5.1-1.5.5:android-arm'
+//    implementation group: 'org.bytedeco', name:  'opencv-platform', version: '4.5.1-1.5.5:android-arm'
     implementation group: 'org.bytedeco', name:  'openblas-platform', version: '0.3.13-1.5.5:android-arm'
 
     // CameraX Library
